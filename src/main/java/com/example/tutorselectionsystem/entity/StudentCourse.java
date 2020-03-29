@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,6 +18,14 @@ public class StudentCourse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int score;
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
     @ManyToOne
     private Student student;
     @ManyToOne
