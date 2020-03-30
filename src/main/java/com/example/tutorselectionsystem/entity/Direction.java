@@ -26,4 +26,6 @@ public class Direction {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
+    @ManyToOne
+    private Tutor tutor;
 }

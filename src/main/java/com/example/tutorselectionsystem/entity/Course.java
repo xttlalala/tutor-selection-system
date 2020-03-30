@@ -30,4 +30,6 @@ public class Course {
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "course")
     private List<StudentCourse> studentCourses;
+    @ManyToOne
+    private Tutor tutor;
 }

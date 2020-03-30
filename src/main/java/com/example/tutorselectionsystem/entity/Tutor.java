@@ -16,8 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Tutor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     @Column(unique = true)
     private long jobNumber;
     private String name;
@@ -34,4 +32,8 @@ public class Tutor {
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "tutor")
     private List<Student> students;
+    @OneToMany(mappedBy = "tutor")
+    private List<Course>  courses;
+    @OneToMany(mappedBy = "tutor")
+    private  List<Direction> directions;
 }

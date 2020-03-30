@@ -16,8 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     @Column(unique = true)//学号列具有唯一约束
     private long studentNumber;
     private String name;
