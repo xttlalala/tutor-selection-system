@@ -15,6 +15,8 @@ public class StudentService {
     public void addStudent(Student student){
         studentRepository.save(student);
     }
+    //方法：为指定课程添加学生，课程id，学生集合
+
 //    public Student getStudent(long schoolNumber){
 //        return studentRepository.findById(schoolNumber).orElse(null);
 //    }
