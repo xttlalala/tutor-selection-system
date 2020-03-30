@@ -22,6 +22,7 @@ public class Tutor {
     private String password;
     private int maxStuNum;
     private int nowStuNum;
+    private int scopeStuNum;
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
@@ -34,6 +35,4 @@ public class Tutor {
     private List<Student> students;
     @OneToMany(mappedBy = "tutor")
     private List<Course>  courses;
-    @OneToMany(mappedBy = "tutor")
-    private  List<Direction> directions;
 }

@@ -4,6 +4,7 @@ import com.example.tutorselectionsystem.Service.CourseService;
 import com.example.tutorselectionsystem.Service.DirectionService;
 import com.example.tutorselectionsystem.Service.StudentService;
 import com.example.tutorselectionsystem.Service.TutorService;
+import com.example.tutorselectionsystem.repository.DirectionRepository;
 import com.example.tutorselectionsystem.repository.TutorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -27,9 +28,12 @@ public class RelationTest {
     public CourseService courseService;
     @Autowired
     public DirectionService directionService;
-//    @Autowired
-//    public TutorRepository tutorRepository;
+    @Autowired
+    public TutorRepository tutorRepository;
+    @Autowired
+    public DirectionRepository directionRepository;
 
+    //添加导师
     @Test
     public void test_init_tutor() {
         Tutor t = new Tutor();
@@ -38,19 +42,46 @@ public class RelationTest {
         t.setPassword("root");
         t.setMaxStuNum(10);
         t.setNowStuNum(0);
+        t.setScopeStuNum(80);
         tutorService.addTutor(t);
     }
 
-//    @Test
-//    public void test_add_reportCard(){
-//        Student s = new Student();
-//        s.setName("Tong");
-//    }
+    //添加毕设方向
+    @Test
+    public void test_init_direction(){
+        Direction d = new Direction();
+        d.setName("人工智能");
+        directionService.addDirection(d);
+        Direction d2 = new Direction();
+        d2.setName("机器学习");
+        directionService.addDirection(d2);
+        Direction d3 = new Direction();
+        d3.setName("软件开发");
+        directionService.addDirection(d3);
+        Direction d4 = new Direction();
+        d4.setName("微信小程序");
+        directionService.addDirection(d4);
+        Direction d5 = new Direction();
+        d5.setName("自然语言处理");
+        directionService.addDirection(d5);
+        Direction d6 = new Direction();
+        d6.setName("图像处理");
+        directionService.addDirection(d6);
+    }
 
-//    @Test
-//    public void update_tutor_password(){
-//        tutorRepository.update(2017224411,"hello");
-//    }
+    //修改指定老师密码
+    @Test
+    public void update_tutor_password(){
+        tutorRepository.updatePassword(2017224411,"hello");
+    }
+    //修改指定老师最大招收学生数和报名学生范围数
+    @Test
+    public void update_tutor_maxStudentNumber(){
+        tutorRepository.updateMaxStuNum(2017224411,10,60);
+    }
+
+
+
 
 
 
