@@ -1,5 +1,6 @@
 package com.example.tutorselectionsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"studentCourses","directions"})
 public class Student {
     @Id
-    @Column(unique = true)//学号列具有唯一约束
-    private long studentNumber;
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @MapsId
+    private User user; //依靠单向@OneToOne和@MapsId，与父表共享主键
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
@@ -31,4 +35,6 @@ public class Student {
     private List<StudentCourse> studentCourses;
     @ManyToOne
     private Tutor tutor;
+    @OneToMany
+    private List<Direction> directions;
 }

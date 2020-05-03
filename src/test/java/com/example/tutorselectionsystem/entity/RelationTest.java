@@ -1,9 +1,9 @@
 package com.example.tutorselectionsystem.entity;
 
-import com.example.tutorselectionsystem.Service.CourseService;
-import com.example.tutorselectionsystem.Service.DirectionService;
-import com.example.tutorselectionsystem.Service.StudentService;
-import com.example.tutorselectionsystem.Service.TutorService;
+import com.example.tutorselectionsystem.service.CourseService;
+import com.example.tutorselectionsystem.service.DirectionService;
+import com.example.tutorselectionsystem.service.StudentService;
+import com.example.tutorselectionsystem.service.TutorService;
 import com.example.tutorselectionsystem.repository.CourseRepository;
 import com.example.tutorselectionsystem.repository.DirectionRepository;
 import com.example.tutorselectionsystem.repository.TutorRepository;
@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -37,17 +37,7 @@ public class RelationTest {
     public CourseRepository courseRepository;
 
     //添加导师
-    @Test
-    public void test_init_tutor() {
-        Tutor t = new Tutor();
-        t.setJobNumber(2017224411);
-        t.setName("BO");
-        t.setPassword("root");
-        t.setMaxStuNum(10);
-        t.setNowStuNum(0);
-        t.setScopeStuNum(80);
-        tutorService.addTutor(t);
-    }
+
 
     //添加毕设方向
     @Test
@@ -92,23 +82,25 @@ public class RelationTest {
         c4.setWeight(0.1);
         courseService.addCourse(c4);
     }
-
+    //
 //    @Test
 //    public void add_student_forCourse(){
 //        tutorService.addSpecifiedStudent((long)2017224411,(long)2017224420);
 //    }
 
-    //修改指定老师密码
-    @Test
-    public void update_tutor_password(){
-        tutorRepository.updatePassword(2017224411,"hello");
-    }
-    //修改指定老师最大招收学生数和报名学生范围数
-    @Test
-    public void update_tutor_maxStudentNumber(){
-        tutorRepository.updateMaxStuNum(2017224411,10,60);
-    }
 
+
+    //修改指定老师密码
+//    @Test
+//    public void update_tutor_password(){
+//        tutorRepository.updatePassword(1,"hello");
+//    }
+//    //修改指定老师最大招收学生数和报名学生范围数
+//    @Test
+//    public void update_tutor_maxStudentNumber(){
+//        tutorRepository.updateMaxStuNum(2017224411,10,60);
+//    }
+//
 
 
 

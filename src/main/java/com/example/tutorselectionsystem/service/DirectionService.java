@@ -1,4 +1,4 @@
-package com.example.tutorselectionsystem.Service;
+package com.example.tutorselectionsystem.service;
 
 import com.example.tutorselectionsystem.entity.Direction;
 import com.example.tutorselectionsystem.repository.DirectionRepository;
@@ -11,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class DirectionService {
     @Autowired
     private DirectionRepository directionRepository;
+    //添加毕业设计方向
     public void addDirection(Direction direction){
         directionRepository.save(direction);
     }
-//    public Direction getDirection(int id){
-//        return directionRepository.findById(id).orElse(null);
-//    }
+
 }

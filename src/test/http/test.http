@@ -1,0 +1,52 @@
+### 登录成功后，向此再发请求；返回教师信息，以及全部课程
+GET http://localhost:8080/api/tutor/index
+Authorization: {{token}}
+
+###
+POST http://localhost:8080/api/tutor/students
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "user": {
+    "name": "SUN",
+    "number": 2017001
+  }
+}
+
+###
+PATCH http://localhost:8080/api/tutor/settings
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "maxStuNum": 10,
+  "scopeStuNum": 30
+
+}
+
+###
+GET http://localhost:8080/api/tutor/courses
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+"name":"java"
+}
+
+###
+GET http://localhost:8080/api/tutor/welcome
+Authorization: {{token}}
+
+### 全局变量，如果http测试文件被改动，可能失效。须重修登录
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+    "number" : "1001",
+    "password": "1001"
+
+}
+
+> {% client.global.set("token", response.headers.valueOf("Authorization")); %}
+###

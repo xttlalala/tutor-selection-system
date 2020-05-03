@@ -1,4 +1,4 @@
-package com.example.tutorselectionsystem.Service;
+package com.example.tutorselectionsystem.service;
 
 import com.example.tutorselectionsystem.entity.Course;
 import com.example.tutorselectionsystem.repository.CourseRepository;
@@ -11,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
+    //添加课程
     public void addCourse(Course course){
         courseRepository.save(course);
     }
-//    public Course getCourse(int id){
-//        return courseRepository.findById(id).orElse(null);
-//    }
+
 }

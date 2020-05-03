@@ -8,18 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TutorRepository extends BaseRepository<Tutor,Long>{
-    @Modifying
-    @Query("update Tutor t set t.password=:password where t.jobNumber=:jobNumber")
-    int updatePassword(@Param("jobNumber")long jobNumber,@Param("password") String password);
+public interface TutorRepository extends BaseRepository<Tutor,Integer>{
+    //修改指定教师密码
+//    @Modifying
+//    @Query("update Tutor t set t.password=:password where t.id=:id")
+//    int updatePassword(@Param("id")int id,@Param("password") String password);
+//    //修改指定教师的最大学生数宇与最大范围数
+//    @Modifying
+//    @Query("update Tutor t set t.maxStuNum=:maxStuNum,t.scopeStuNum=:scopeStuNum where t.id=:id")
+//    int updateMaxStuNum(@Param("id")long id,@Param("maxStuNum") int maxStuNum,@Param("scopeStuNum")int scopeStuNum);
 
-    @Modifying
-    @Query("update Tutor t set t.maxStuNum=:maxStuNum,t.scopeStuNum=:scopeStuNum where t.jobNumber=:jobNumber")
-    int updateMaxStuNum(@Param("jobNumber")long jobNumber,@Param("maxStuNum") int maxStuNum,@Param("scopeStuNum")int scopeStuNum);
 
-//    public void addSpecifiedStudent(Long studentNumber){
-//        @Query("from Student s where s.studentNumber=:studentNumber")
-//        Student findSpecStudent(@Param("studentNumber") long studentNumber);
-//
-//    }
 }

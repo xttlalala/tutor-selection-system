@@ -1,11 +1,13 @@
-package com.example.tutorselectionsystem.Service;
+package com.example.tutorselectionsystem.service;
 
 import com.example.tutorselectionsystem.entity.Student;
-import com.example.tutorselectionsystem.entity.Tutor;
 import com.example.tutorselectionsystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -15,9 +17,4 @@ public class StudentService {
     public void addStudent(Student student){
         studentRepository.save(student);
     }
-    //方法：为指定课程添加学生，课程id，学生集合
-
-//    public Student getStudent(long schoolNumber){
-//        return studentRepository.findById(schoolNumber).orElse(null);
-//    }
 }
