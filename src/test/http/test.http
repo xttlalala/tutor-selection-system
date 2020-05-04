@@ -15,6 +15,27 @@ Authorization: {{token}}
 }
 
 ###
+PATCH http://localhost:8080/api/updatePwd
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "password": 1001
+}
+
+###
+PATCH http://localhost:8080/api/updatePwd1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "number": 1001,
+  "password": 1001
+}
+
+
+
+###
 PATCH http://localhost:8080/api/tutor/settings
 Content-Type: application/json
 Authorization: {{token}}
@@ -44,7 +65,7 @@ Content-Type: application/json
 
 {
     "number" : "1001",
-    "password": "1001"
+    "password": "1002"
 
 }
 

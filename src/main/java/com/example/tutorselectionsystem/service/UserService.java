@@ -22,6 +22,12 @@ public class UserService {
 //    public User getUser(Integer id){
 //        return userRepository.findById(id).orElse(null);
 //    }
+    public User  updatePwd(int number,String password){
+        User u = userRepository.findById(number).orElseThrow();
+        u.setPassword(password);
+        return u;
+    }
+
     public User getUser(int number){
         return userRepository.getUser(number);
     }

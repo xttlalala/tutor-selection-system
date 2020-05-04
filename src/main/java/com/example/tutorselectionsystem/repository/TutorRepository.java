@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TutorRepository extends BaseRepository<Tutor,Integer>{
-    //修改指定教师密码
-//    @Modifying
-//    @Query("update Tutor t set t.password=:password where t.id=:id")
-//    int updatePassword(@Param("id")int id,@Param("password") String password);
+
 //    //修改指定教师的最大学生数宇与最大范围数
 //    @Modifying
 //    @Query("update Tutor t set t.maxStuNum=:maxStuNum,t.scopeStuNum=:scopeStuNum where t.id=:id")

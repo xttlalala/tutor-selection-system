@@ -2,6 +2,7 @@ package com.example.tutorselectionsystem.controller;
 
 import com.example.tutorselectionsystem.component.EncryptComponent;
 import com.example.tutorselectionsystem.component.MyToken;
+import com.example.tutorselectionsystem.component.RequestComponent;
 import com.example.tutorselectionsystem.entity.User;
 import com.example.tutorselectionsystem.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +33,9 @@ public class LoginController {
     private PasswordEncoder encoder;
     @Autowired
     private EncryptComponent encrypt;
+    @Autowired
+    private RequestComponent requestComponent;
+
 
     @PostMapping("login")
     public Map login(@RequestBody User loginUser, HttpServletResponse response){//直接在方法中注入HttpServletResponse response对象
@@ -48,4 +49,20 @@ public class LoginController {
         String roleCode = user.getRole()== User.Role.TUTOR?roleTutor:roleStudent;
         return Map.of("role",roleCode);//告诉前端你是什么身份，前端渲染不同界面
     }
+
+    @PatchMapping("updatePwd")
+    public Map patchUpdatePwd(@RequestBody User u){
+        User u1 = userService.updatePwd(requestComponent.getUid(),encoder.encode(u.getPassword()));
+        return Map.of("user",u1);
+    }
+
+
+//    @PostMapping("updatePwd")
+//    public Map updatePwd(@RequestBody User updateUser,HttpServletResponse response){
+//        User user = Optional.ofNullable(userService.getUser(updateUser.getNumber()))
+//                .filter(u -> encoder.matches(updateUser.getPassword(),u.getPassword()))
+//                .orElseThrow(()->new ResponseStatusException(HttpStatus.UNAUTHORIZED),"用户名或密码错误");
+//        userService.updatePwd(user.getNumber(), user.getPassword());
+//
+//    }
 }

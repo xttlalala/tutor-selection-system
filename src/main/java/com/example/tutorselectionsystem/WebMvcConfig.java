@@ -21,6 +21,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/login");
 
         registry.addInterceptor(tutorInterceptor)
-                .addPathPatterns("/api/teacher/**");
+                .addPathPatterns("/api/tutor/**");
     }
 }
