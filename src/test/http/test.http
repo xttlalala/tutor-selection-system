@@ -3,6 +3,10 @@ GET http://localhost:8080/api/tutor/index
 Authorization: {{token}}
 
 ###
+GET http://localhost:8080/api/directions
+Authorization: {{token}}
+
+###
 POST http://localhost:8080/api/tutor/students
 Content-Type: application/json
 Authorization: {{token}}
@@ -65,7 +69,7 @@ Content-Type: application/json
 
 {
     "number" : "1001",
-    "password": "1002"
+    "password": "1001"
 
 }
 

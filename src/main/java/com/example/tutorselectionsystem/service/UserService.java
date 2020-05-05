@@ -1,15 +1,18 @@
 package com.example.tutorselectionsystem.service;
 
+import com.example.tutorselectionsystem.entity.Direction;
 import com.example.tutorselectionsystem.entity.Tutor;
 import com.example.tutorselectionsystem.entity.User;
+import com.example.tutorselectionsystem.repository.DirectionRepository;
 import com.example.tutorselectionsystem.repository.TutorRepository;
 import com.example.tutorselectionsystem.repository.UserRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @Data
@@ -19,6 +22,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private TutorRepository tutorRepository;
+    @Autowired
+    private DirectionRepository directionRepository;
 //    public User getUser(Integer id){
 //        return userRepository.findById(id).orElse(null);
 //    }
@@ -50,6 +55,9 @@ public class UserService {
         t.setScopeStuNum(scopeStuNum);
         return t;
 
+    }
+    public List<Direction> getDirections(){
+        return directionRepository.findAll();
     }
 
 

@@ -3,6 +3,7 @@ package com.example.tutorselectionsystem.controller;
 import com.example.tutorselectionsystem.component.MyToken;
 import com.example.tutorselectionsystem.component.RequestComponent;
 import com.example.tutorselectionsystem.entity.Course;
+import com.example.tutorselectionsystem.entity.Direction;
 import com.example.tutorselectionsystem.entity.Student;
 import com.example.tutorselectionsystem.entity.Tutor;
 import com.example.tutorselectionsystem.service.CourseService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Console;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -55,6 +57,7 @@ public class TutorController {
         courseService.addCourse(course);
         return Map.of("course",course);
     }
+
     //导师修改范围数和最大学生数
     @PatchMapping("settings")
     public Map patchSettings(@RequestBody Tutor t){
@@ -66,6 +69,13 @@ public class TutorController {
     public Map postStudent(@RequestBody Student s){
         Student student = tutorService.addStudent(s,requestComponent.getUid());
         return Map.of("student",s);
+    }
+    //修改全部方向
+    @PostMapping("updateDirections")
+    public Map updateDirections(@RequestBody List<Direction> newDirections){
+        tutorService.updateDirections(newDirections);
+        return Map.of("result",1);
+
     }
 
 

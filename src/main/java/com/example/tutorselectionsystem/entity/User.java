@@ -21,6 +21,7 @@ public class User {
     private String password;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Role role;
+
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)

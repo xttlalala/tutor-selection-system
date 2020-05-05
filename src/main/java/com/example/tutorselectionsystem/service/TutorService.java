@@ -2,10 +2,7 @@ package com.example.tutorselectionsystem.service;
 
 
 import com.example.tutorselectionsystem.entity.*;
-import com.example.tutorselectionsystem.repository.CourseRepository;
-import com.example.tutorselectionsystem.repository.StudentCourseRepository;
-import com.example.tutorselectionsystem.repository.StudentRepository;
-import com.example.tutorselectionsystem.repository.TutorRepository;
+import com.example.tutorselectionsystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +19,8 @@ public class TutorService {
     private TutorRepository tutorRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private DirectionRepository directionRepository;
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
@@ -53,6 +52,13 @@ public class TutorService {
         studentRepository.save(student);
         return student;
     }
+    public void updateDirections(List<Direction> newDirections){
+        directionRepository.deleteAll();
+        for(int i=0;i<newDirections.size();i++){
+            directionRepository.save(newDirections.get(i));
+        }
+    }
+
 
 
 

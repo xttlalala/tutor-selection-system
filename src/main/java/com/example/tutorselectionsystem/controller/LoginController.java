@@ -3,6 +3,7 @@ package com.example.tutorselectionsystem.controller;
 import com.example.tutorselectionsystem.component.EncryptComponent;
 import com.example.tutorselectionsystem.component.MyToken;
 import com.example.tutorselectionsystem.component.RequestComponent;
+import com.example.tutorselectionsystem.entity.Direction;
 import com.example.tutorselectionsystem.entity.User;
 import com.example.tutorselectionsystem.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -54,6 +56,12 @@ public class LoginController {
     public Map patchUpdatePwd(@RequestBody User u){
         User u1 = userService.updatePwd(requestComponent.getUid(),encoder.encode(u.getPassword()));
         return Map.of("user",u1);
+    }
+
+    @GetMapping("directions")
+    public Map directions(){
+        List<Direction> directions = userService.getDirections();
+        return Map.of("directions",directions);
     }
 
 
