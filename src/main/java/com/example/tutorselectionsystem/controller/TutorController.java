@@ -2,10 +2,7 @@ package com.example.tutorselectionsystem.controller;
 
 import com.example.tutorselectionsystem.component.MyToken;
 import com.example.tutorselectionsystem.component.RequestComponent;
-import com.example.tutorselectionsystem.entity.Course;
-import com.example.tutorselectionsystem.entity.Direction;
-import com.example.tutorselectionsystem.entity.Student;
-import com.example.tutorselectionsystem.entity.Tutor;
+import com.example.tutorselectionsystem.entity.*;
 import com.example.tutorselectionsystem.service.CourseService;
 import com.example.tutorselectionsystem.service.TutorService;
 import com.example.tutorselectionsystem.service.UserService;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,11 +48,28 @@ public class TutorController {
         );
     }
 
+    //建立学生 学生-课程-成绩关联
+//    @PostMapping("buildStudent")
+//    public void buildStudent(@RequestBody StudentCourse sc){
+//        log.debug("{}", sc.getCourse().getId());
+//        log.debug("{}", sc.getStudent().getUser().getNumber());
+//    }
+    @PostMapping("buildStudent")
+    public void buildStudent(@RequestBody List<StudentCourse> studentCourses){
+        log.debug("{}", studentCourses.toString());
+
+    }
+
     //导师增加课程
-    @GetMapping("courses")
+    @PostMapping("addcourse")
     public Map postCourse(@RequestBody Course course){
         course.setTutor(new Tutor(requestComponent.getUid()));
         courseService.addCourse(course);
+        return Map.of("course",course);
+    }
+    @PatchMapping("updateCourse")
+    public Map updateCourse(@RequestBody Course c){
+        Course course = tutorService.updateCourse(c.getId(),c.getName(),c.getWeight());
         return Map.of("course",course);
     }
 
@@ -75,8 +90,15 @@ public class TutorController {
     public Map updateDirections(@RequestBody List<Direction> newDirections){
         tutorService.updateDirections(newDirections);
         return Map.of("result",1);
-
+    }
+    //删除课程
+    @PostMapping("deleteCourse")
+    public Map deleteCourse(@RequestBody Course c){
+//        Tutor t = userService.getTutor(requestComponent.getUid());
+        tutorService.deleteCourse(c.getId());
+        return Map.of("result",1);
     }
 
 
 }
+

@@ -58,6 +58,15 @@ public class TutorService {
             directionRepository.save(newDirections.get(i));
         }
     }
+    public void deleteCourse(int id){
+        courseRepository.delete(new Course(id));
+    }
+    public Course updateCourse (int id,String name,double weight){
+        Course c = courseRepository.findById(id).orElseThrow();
+        c.setName(name);
+        c.setWeight(weight);
+        return c;
+    }
 
 
 

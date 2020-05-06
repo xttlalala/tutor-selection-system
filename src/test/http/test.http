@@ -51,12 +51,13 @@ Authorization: {{token}}
 }
 
 ###
-GET http://localhost:8080/api/tutor/courses
+GET http://localhost:8080/api/tutor/addcourse
 Content-Type: application/json
 Authorization: {{token}}
 
 {
-"name":"java"
+"name":"web",
+  "weight": 20
 }
 
 ###

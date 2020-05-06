@@ -30,4 +30,6 @@ public class StudentCourse {
     private Student student;
     @ManyToOne
     private Course course;
+
+
 }

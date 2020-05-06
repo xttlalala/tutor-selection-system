@@ -37,4 +37,6 @@ public class Student {
     private Tutor tutor;
     @OneToMany
     private List<Direction> directions;
+
+
 }

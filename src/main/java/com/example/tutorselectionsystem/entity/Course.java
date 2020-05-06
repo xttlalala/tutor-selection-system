@@ -34,4 +34,8 @@ public class Course {
     private List<StudentCourse> studentCourses;
     @ManyToOne
     private Tutor tutor;
+
+    public Course(int id) {
+        this.id = id;
+    }
 }
