@@ -41,11 +41,24 @@ public class TutorController {
     @GetMapping("index")
     public Map getTutor(){
         Tutor t = userService.getTutor(requestComponent.getUid());
-        return Map.of(
+                return Map.of(
                 "tutor",t,
                 "course",t.getCourses(),//springmvc允许延迟加载的get方法
                 "students",t.getStudents()
         );
+    }
+    //计算学生
+    @GetMapping("excuteStudent")
+    public Map excuteStudent(){
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        List<Integer> studentNumbers = tutorService.excuteStudent(t);
+        int num = studentNumbers.size();
+        User[] users = new User[num];
+        for(int i=0;i<num;i++){
+            users[i] = userService.getUser(studentNumbers.get(i));
+        }
+        log.debug("{}", users);
+        return Map.of("studentUsers",users);
     }
 
     //建立学生 学生-课程-成绩关联
@@ -55,9 +68,10 @@ public class TutorController {
 //        log.debug("{}", sc.getStudent().getUser().getNumber());
 //    }
     @PostMapping("buildStudent")
-    public void buildStudent(@RequestBody List<StudentCourse> studentCourses){
-        log.debug("{}", studentCourses.toString());
-
+    public Map buildStudent(@RequestBody List<StudentCourse> studentCourses){
+        log.debug("{}", studentCourses.get(1));
+        tutorService.buildStudents(studentCourses);
+        return Map.of("result",1);
     }
 
     //导师增加课程
@@ -80,7 +94,7 @@ public class TutorController {
         return Map.of("tutor",t1);
     }
     //添加预先联系好的学生
-    @PostMapping("students")
+    @PostMapping("addStudent")
     public Map postStudent(@RequestBody Student s){
         Student student = tutorService.addStudent(s,requestComponent.getUid());
         return Map.of("student",s);
@@ -98,6 +112,7 @@ public class TutorController {
         tutorService.deleteCourse(c.getId());
         return Map.of("result",1);
     }
+
 
 
 }

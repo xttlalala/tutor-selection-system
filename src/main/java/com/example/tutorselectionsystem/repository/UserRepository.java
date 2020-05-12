@@ -9,13 +9,14 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface UserRepository extends BaseRepository<User,Integer> {
-    Optional<User> findById(Integer id);
 
     @Query("SELECT u FROM User u WHERE u.number=:number")
     User getUser(@Param("number") int number);
 
+    User findById(int id);
 //    修改用户密码 没用上
     @Modifying
     @Query("update User u set u.password=:password where u.number=:number")
     int updatePassword(@Param("number")int number,@Param("password") String password);
 }
+

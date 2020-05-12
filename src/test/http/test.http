@@ -2,19 +2,27 @@
 GET http://localhost:8080/api/tutor/index
 Authorization: {{token}}
 
+### 登录成功后，向此再发请求；返回教师信息，以及全部课程
+GET http://localhost:8080/api/studentindex
+Authorization: {{token}}
+
 ###
 GET http://localhost:8080/api/directions
 Authorization: {{token}}
 
 ###
-POST http://localhost:8080/api/tutor/students
+GET http://localhost:8080/api/tutor/excuteStudent
+Authorization: {{token}}
+
+###
+POST http://localhost:8080/api/tutor/addStudent
 Content-Type: application/json
 Authorization: {{token}}
 
 {
   "user": {
-    "name": "SUN",
-    "number": 2017001
+    "name": "SUN4",
+    "number": 2017004
   }
 }
 
@@ -69,8 +77,8 @@ POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
-    "number" : "1001",
-    "password": "1001"
+    "number" : "2017214169",
+    "password": "2017214169"
 
 }
 

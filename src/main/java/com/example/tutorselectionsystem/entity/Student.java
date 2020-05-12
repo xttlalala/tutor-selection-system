@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"studentCourses","directions"})
+@JsonIgnoreProperties({"studentCourses"})
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,7 @@ public class Student {
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @MapsId
     private User user; //依靠单向@OneToOne和@MapsId，与父表共享主键
+    private String mydirection;
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
@@ -35,8 +36,6 @@ public class Student {
     private List<StudentCourse> studentCourses;
     @ManyToOne
     private Tutor tutor;
-    @OneToMany
-    private List<Direction> directions;
 
 
 }

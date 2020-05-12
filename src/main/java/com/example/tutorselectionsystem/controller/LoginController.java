@@ -3,19 +3,18 @@ package com.example.tutorselectionsystem.controller;
 import com.example.tutorselectionsystem.component.EncryptComponent;
 import com.example.tutorselectionsystem.component.MyToken;
 import com.example.tutorselectionsystem.component.RequestComponent;
-import com.example.tutorselectionsystem.entity.Direction;
-import com.example.tutorselectionsystem.entity.User;
+import com.example.tutorselectionsystem.entity.*;
+import com.example.tutorselectionsystem.repository.UserRepository;
+import com.example.tutorselectionsystem.service.TutorService;
 import com.example.tutorselectionsystem.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,10 @@ public class LoginController {
     private String roleTutor;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private TutorService tutorService;
     @Autowired
     private PasswordEncoder encoder;
     @Autowired
@@ -52,6 +55,43 @@ public class LoginController {
         return Map.of("role",roleCode);//告诉前端你是什么身份，前端渲染不同界面
     }
 
+    @PostMapping("choice")
+    public Map choice(@RequestBody Tutor t0){
+        int tid = t0.getId();
+        Tutor t = userService.getTutor(tid);
+        List<Integer> okStudentList = tutorService.excuteStudent(t);
+        int myNumber = userRepository.findById(requestComponent.getUid()).getNumber();
+        boolean success = false;
+        for(int number:okStudentList){
+            if(number==myNumber){
+                success=true;
+                log.debug("{}", "入选");
+                break;
+            }
+        }
+        if(success){
+            Student s = userService.getStudent(requestComponent.getUid());
+            Student student = tutorService.addStudent(s, tid);
+
+            return Map.of("choose",1);
+        }
+        else{
+            log.debug("{}", "未入选");
+            return Map.of("choose",0);
+        }
+    }
+
+    @PostMapping("addSDirection")
+    public void addSDirection(@RequestBody List<Direction> Directions){
+        log.debug("{}", Directions.get(1));
+        Student s = userService.getStudent(requestComponent.getUid());
+//        for (SDirection sDirection:sDirections){
+//            sDirection.setStudent(s);
+//            sDirectionRepository.save(sDirection);
+//        }
+    }
+
+
     @PatchMapping("updatePwd")
     public Map patchUpdatePwd(@RequestBody User u){
         User u1 = userService.updatePwd(requestComponent.getUid(),encoder.encode(u.getPassword()));
@@ -62,6 +102,26 @@ public class LoginController {
     public Map directions(){
         List<Direction> directions = userService.getDirections();
         return Map.of("directions",directions);
+    }
+
+    @GetMapping("studentindex")
+    public Map getStudent(){
+        log.debug("{}", requestComponent.getUid());
+        Student s = userService.getStudent(requestComponent.getUid());
+        String tname=" ";
+        if(s.getTutor()!=null){
+             tname = s.getTutor().getUser().getName();
+        }
+        log.debug("{}", tname);
+        return Map.of(
+                "student",s,
+                "tutorname",tname//springmvc允许延迟加载的get方法
+        );
+    }
+    @GetMapping("tutorsindex")
+    public Map getTutors(){
+        List<Tutor> tutors = tutorService.getTutors();
+        return  Map.of("tutors",tutors);
     }
 
 
