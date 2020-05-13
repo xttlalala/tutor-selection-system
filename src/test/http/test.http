@@ -10,6 +10,10 @@ Authorization: {{token}}
 GET http://localhost:8080/api/directions
 Authorization: {{token}}
 
+
+
+
+
 ###
 GET http://localhost:8080/api/tutor/excuteStudent
 Authorization: {{token}}
@@ -69,6 +73,16 @@ Authorization: {{token}}
 }
 
 ###
+POST http://localhost:8080/api/tutor/updateSdir
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "id":174,
+  "mydirection": "嵌入式"
+}
+
+###
 GET http://localhost:8080/api/tutor/welcome
 Authorization: {{token}}
 
@@ -77,8 +91,8 @@ POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
-    "number" : "2017214169",
-    "password": "2017214169"
+    "number" : "1001",
+    "password": "1001"
 
 }
 

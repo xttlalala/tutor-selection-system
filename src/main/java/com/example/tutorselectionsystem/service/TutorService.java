@@ -6,12 +6,17 @@ import com.example.tutorselectionsystem.repository.*;
 import com.example.tutorselectionsystem.utils.excute;
 import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.beans.Encoder;
+import java.net.http.HttpResponse;
 import java.util.*;
 
 @Service
@@ -58,6 +63,9 @@ public class TutorService {
                     u.setRole(User.Role.STUDENT);
                     return s;
                 });
+        if(student.getTutor()!=null){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        }
         Tutor t = tutorRepository.findById(tid).orElseThrow();
         int number = t.getNowStuNum();
         t.setNowStuNum(number+1);
@@ -75,20 +83,39 @@ public class TutorService {
     public void deleteCourse(int id){
         courseRepository.delete(new Course(id));
     }
+
+    //修改指定课程的课程比重
     public Course updateCourse (int id,String name,double weight){
         Course c = courseRepository.findById(id).orElseThrow();
         c.setName(name);
         c.setWeight(weight);
         return c;
     }
+    //修改指定学生的毕设方向
+    public Student updateSdir(int id,String dir){
+        Student s = studentRepository.findById(id).orElseThrow();
+        s.setMydirection(dir);
+        return s;
+    }
+    //取消该学生与老师的关联
+    public Student deleteRelation(int sid,int tid){
+        Tutor t = tutorRepository.findById(tid).orElseThrow();
+        Student s = studentRepository.findById(sid).orElseThrow();
+        s.setTutor(null);
+        int nowStuNum = t.getNowStuNum();
+        t.setNowStuNum(nowStuNum-1);
+        return s;
+    }
 
     //建立学生 学生-课程-成绩关联
     public void buildStudents(List<StudentCourse> scs){
-        StudentCourse sc0 = studentCourseRepository.getSC(scs.get(0).getCourse().getId());
-        if (sc0==null){
-            studentCourseRepository.deleteAllByCourse_Id(scs.get(0).getCourse().getId());
+        int cid = scs.get(0).getCourse().getId();
+        List<StudentCourse> nowscs = studentCourseRepository.findAll();
+        for(StudentCourse sc:nowscs){
+            if(sc.getCourse().getId()==cid){
+                studentCourseRepository.delete(sc);
+            }
         }
-//        studentCourseRepository.deleteAllByCourse_Id(scs.get(1).getCourse().getId());
         for (StudentCourse sc:scs) {
             Student student = Optional.ofNullable(studentRepository.find(sc.getStudent().getUser().getName(),sc.getStudent().getUser().getNumber()))
                     .orElseGet(()->{
@@ -102,10 +129,10 @@ public class TutorService {
             log.debug("{}", sc);
             studentCourseRepository.save(sc);
         }
-//        for(int i=0;i<scs.size();i++){
-//
-//            studentCourseRepository.save(scs.get(i));
-//        }
+        for(int i=0;i<scs.size();i++){
+
+            studentCourseRepository.save(scs.get(i));
+        }
     }
 
     //计算学生

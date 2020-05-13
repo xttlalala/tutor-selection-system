@@ -81,14 +81,12 @@ public class LoginController {
         }
     }
 
-    @PostMapping("addSDirection")
+    @PostMapping("addDirection")
     public void addSDirection(@RequestBody List<Direction> Directions){
         log.debug("{}", Directions.get(1));
         Student s = userService.getStudent(requestComponent.getUid());
-//        for (SDirection sDirection:sDirections){
-//            sDirection.setStudent(s);
-//            sDirectionRepository.save(sDirection);
-//        }
+        userService.addSDirection(s,Directions);
+
     }
 
 

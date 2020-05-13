@@ -86,6 +86,16 @@ public class TutorController {
         Course course = tutorService.updateCourse(c.getId(),c.getName(),c.getWeight());
         return Map.of("course",course);
     }
+    @PostMapping("updateSdir")
+    public Map updateSdir(@RequestBody Student s){
+        Student student = tutorService.updateSdir(s.getId(),s.getMydirection());
+        return  Map.of("student",student);
+    }
+    @PostMapping("deleteRelation")
+    public Map deleteRelation(@RequestBody Student s){
+        Student student = tutorService.deleteRelation(s.getId(),requestComponent.getUid());
+        return  Map.of("student",student);
+    }
 
     //导师修改范围数和最大学生数
     @PatchMapping("settings")

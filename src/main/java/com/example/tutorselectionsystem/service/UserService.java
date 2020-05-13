@@ -67,4 +67,15 @@ public class UserService {
         List<StudentCourse> scs = studentCourseRepository.findStudent(sid);
 
     }
+
+    public void addSDirection(Student s,List<Direction> directions){
+        String str="";
+        int i;
+        for(i=0;i<directions.size()-1;i++){
+            str = str + directions.get(i).getName()+",";
+        }
+        str = str+directions.get(i).getName();
+        s.setMydirection(str);
+        studentRepository.save(s);
+    }
 }
