@@ -26,7 +26,7 @@ public class StudentCourse {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToOne
     private Student student;
     @ManyToOne
     private Course course;

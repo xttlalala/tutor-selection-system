@@ -32,7 +32,7 @@ public class Student {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<StudentCourse> studentCourses;
     @ManyToOne
     private Tutor tutor;

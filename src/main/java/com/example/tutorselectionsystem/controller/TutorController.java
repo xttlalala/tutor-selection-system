@@ -79,49 +79,60 @@ public class TutorController {
     public Map postCourse(@RequestBody Course course){
         course.setTutor(new Tutor(requestComponent.getUid()));
         courseService.addCourse(course);
-        return Map.of("course",course);
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        return Map.of("tcourses",t.getCourses());
     }
     @PatchMapping("updateCourse")
     public Map updateCourse(@RequestBody Course c){
-        Course course = tutorService.updateCourse(c.getId(),c.getName(),c.getWeight());
-        return Map.of("course",course);
-    }
-    @PostMapping("updateSdir")
-    public Map updateSdir(@RequestBody Student s){
-        Student student = tutorService.updateSdir(s.getId(),s.getMydirection());
-        return  Map.of("student",student);
-    }
-    @PostMapping("deleteRelation")
-    public Map deleteRelation(@RequestBody Student s){
-        Student student = tutorService.deleteRelation(s.getId(),requestComponent.getUid());
-        return  Map.of("student",student);
-    }
-
-    //导师修改范围数和最大学生数
-    @PatchMapping("settings")
-    public Map patchSettings(@RequestBody Tutor t){
-        Tutor t1 = userService.updateTutor(t.getMaxStuNum(),t.getScopeStuNum(),requestComponent.getUid());
-        return Map.of("tutor",t1);
-    }
-    //添加预先联系好的学生
-    @PostMapping("addStudent")
-    public Map postStudent(@RequestBody Student s){
-        Student student = tutorService.addStudent(s,requestComponent.getUid());
-        return Map.of("student",s);
-    }
-    //修改全部方向
-    @PostMapping("updateDirections")
-    public Map updateDirections(@RequestBody List<Direction> newDirections){
-        tutorService.updateDirections(newDirections);
-        return Map.of("result",1);
+        tutorService.updateCourse(c.getId(),c.getName(),c.getWeight());
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        return Map.of("tcourses",t.getCourses());
     }
     //删除课程
     @PostMapping("deleteCourse")
     public Map deleteCourse(@RequestBody Course c){
 //        Tutor t = userService.getTutor(requestComponent.getUid());
         tutorService.deleteCourse(c.getId());
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        return Map.of("tcourses",t.getCourses());
+
+    }
+    //添加预先联系好的学生
+    @PostMapping("addStudent")
+    public Map postStudent(@RequestBody Student s){
+        tutorService.addStudent(s,requestComponent.getUid());
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        return Map.of("tstudents",t.getStudents());
+    }
+    //修改学生的方向
+    @PostMapping("updateSdir")
+    public Map updateSdir(@RequestBody Student s){
+        tutorService.updateSdir(s.getId(),s.getMydirection());
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        return Map.of("tstudents",t.getStudents());
+    }
+    @PostMapping("deleteRelation")
+    public Map deleteRelation(@RequestBody Student s){
+        tutorService.deleteRelation(s.getId(),requestComponent.getUid());
+        Tutor t = userService.getTutor(requestComponent.getUid());
+        return Map.of("tstudents",t.getStudents());
+    }
+
+    //导师修改范围数和最大学生数
+    @PatchMapping("settings")
+    public Map patchSettings(@RequestBody Tutor t){
+        userService.updateTutor(t.getMaxStuNum(),t.getScopeStuNum(),requestComponent.getUid());
+        Tutor t1 = userService.getTutor(requestComponent.getUid());
+        return Map.of("tutor",t1);
+    }
+
+    //修改全部方向
+    @PostMapping("updateDirections")
+    public Map updateDirections(@RequestBody List<Direction> newDirections){
+        tutorService.updateDirections(newDirections);
         return Map.of("result",1);
     }
+
 
 
 

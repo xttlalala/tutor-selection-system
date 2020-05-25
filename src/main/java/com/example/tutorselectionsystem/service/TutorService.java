@@ -81,7 +81,8 @@ public class TutorService {
         }
     }
     public void deleteCourse(int id){
-        courseRepository.delete(new Course(id));
+//        studentCourseRepository.deleteAllByCourse_Id(id);
+        courseRepository.deleteById(id);
     }
 
     //修改指定课程的课程比重
