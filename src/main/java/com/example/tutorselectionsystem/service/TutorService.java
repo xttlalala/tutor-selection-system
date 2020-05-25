@@ -156,10 +156,15 @@ public class TutorService {
                     if(map.get(id)!=null){
                         t = map.get(id);
                     }
-                    map.put(id, (t+(sc.getCourse().getWeight())*(sc.getScore())*0.01));
+                    map.put(id, (t+(sc.getCourse().getWeight())*(sc.getScore())));
                 }
             }
-
+        }
+        for(Integer number:map.keySet()){
+            int id = userRepository.getUser(number).getId();
+            int courseNum = studentCourseRepository.findStudent(id).size();
+            double score = map.get(number)/courseNum;
+            map.put(number, score);
         }
         //map基于value值的降序
         map =  excute.sortByValueDescending(map);//引入函数文件
@@ -169,8 +174,8 @@ public class TutorService {
         }
         //返回排完序后，只有键(学号)的数组
         List<Integer> mapKeyList = new ArrayList<Integer>(map.keySet());
-        int maxStuScope = tutor.getScopeStuNum();
-        mapKeyList = mapKeyList.subList(0, maxStuScope);
+//        int maxStuScope = tutor.getScopeStuNum();
+//        mapKeyList = mapKeyList.subList(0, maxStuScope);
         System.out.println("mapKeyList:"+mapKeyList);
         return mapKeyList;
 

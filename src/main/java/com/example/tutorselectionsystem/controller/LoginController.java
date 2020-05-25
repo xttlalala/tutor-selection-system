@@ -59,7 +59,9 @@ public class LoginController {
     public Map choice(@RequestBody Tutor t0){
         int tid = t0.getId();
         Tutor t = userService.getTutor(tid);
-        List<Integer> okStudentList = tutorService.excuteStudent(t);
+        int maxStuScope = t.getScopeStuNum();
+        List<Integer> mapKeyList = tutorService.excuteStudent(t);
+        List<Integer> okStudentList = mapKeyList.subList(0, maxStuScope);
         int myNumber = userRepository.findById(requestComponent.getUid()).getNumber();
         boolean success = false;
         for(int number:okStudentList){
