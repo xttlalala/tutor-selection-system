@@ -69,7 +69,6 @@ public class TutorController {
 //    }
     @PostMapping("buildStudent")
     public Map buildStudent(@RequestBody List<StudentCourse> studentCourses){
-        log.debug("{}", studentCourses.get(1));
         tutorService.buildStudents(studentCourses);
         return Map.of("result",1);
     }

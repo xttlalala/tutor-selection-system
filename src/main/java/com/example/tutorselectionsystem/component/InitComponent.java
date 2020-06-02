@@ -44,7 +44,7 @@ public class InitComponent implements InitializingBean {
             u.setName("Lily");
             u.setNumber(number2);
             u.setRole(User.Role.TUTOR);
-            u.setPassword(encoder.encode(String.valueOf(number)));
+            u.setPassword(encoder.encode(String.valueOf(number2)));
 
             Tutor t = new Tutor();//注意：tutor和user是组合关系，
             // 直接持久化tutor是不行的 save User之后才能save Tutor

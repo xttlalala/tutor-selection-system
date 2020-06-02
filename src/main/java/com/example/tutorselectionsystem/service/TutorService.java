@@ -127,13 +127,12 @@ public class TutorService {
                         return s;
                     });
             sc.setStudent(student);
-            log.debug("{}", sc);
+//            log.debug("{}", sc);
             studentCourseRepository.save(sc);
         }
-        for(int i=0;i<scs.size();i++){
-
-            studentCourseRepository.save(scs.get(i));
-        }
+//        for(int i=0;i<scs.size();i++){
+//            studentCourseRepository.save(scs.get(i));
+//        }
     }
 
     //计算学生
@@ -162,7 +161,16 @@ public class TutorService {
         }
         for(Integer number:map.keySet()){
             int id = userRepository.getUser(number).getId();
-            int courseNum = studentCourseRepository.findStudent(id).size();
+            //找出当前学生的所有选课记录
+            List<StudentCourse> theStudentSCs = studentCourseRepository.findStudent(id);
+            int courseNum=0;
+            //取当前学生的所有选课与该老师所教课的交集（找出该学生选的该老师的课的所有选课记录）
+            //得出这个学生选了这个老师多少门课
+            for(Integer t_cid:tcoursesIds)
+                for (StudentCourse sc:theStudentSCs){
+                    if(sc.getCourse().getId()==t_cid)
+                        courseNum++;
+                }
             double score = map.get(number)/courseNum;
             map.put(number, score);
         }

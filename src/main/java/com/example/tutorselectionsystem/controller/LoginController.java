@@ -59,23 +59,29 @@ public class LoginController {
     public Map choice(@RequestBody Tutor t0){
         int tid = t0.getId();
         Tutor t = userService.getTutor(tid);
-        int maxStuScope = t.getScopeStuNum();
         List<Integer> mapKeyList = tutorService.excuteStudent(t);
-        List<Integer> okStudentList = mapKeyList.subList(0, maxStuScope);
-        int myNumber = userRepository.findById(requestComponent.getUid()).getNumber();
-        boolean success = false;
-        for(int number:okStudentList){
-            if(number==myNumber){
-                success=true;
-                log.debug("{}", "入选");
-                break;
+        int maxStuScope = t.getScopeStuNum()>mapKeyList.size()?mapKeyList.size():t.getScopeStuNum();
+        if(maxStuScope!=0){
+            List<Integer> okStudentList = mapKeyList.subList(0, maxStuScope);
+            int myNumber = userRepository.findById(requestComponent.getUid()).getNumber();
+            boolean success = false;
+            for(int number:okStudentList){
+                if(number==myNumber){
+                    success=true;
+                    log.debug("{}", "入选");
+                    break;
+                }
             }
-        }
-        if(success){
-            Student s = userService.getStudent(requestComponent.getUid());
-            Student student = tutorService.addStudent(s, tid);
+            if(success){
+                Student s = userService.getStudent(requestComponent.getUid());
+                Student student = tutorService.addStudent(s, tid);
 
-            return Map.of("choose",1);
+                return Map.of("choose",1);
+            }
+            else{
+                log.debug("{}", "未入选");
+                return Map.of("choose",0);
+            }
         }
         else{
             log.debug("{}", "未入选");
