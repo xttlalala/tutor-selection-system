@@ -15,7 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private TutorInterceptor tutorInterceptor;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {//注入拦截器对象
+    public void addInterceptors(InterceptorRegistry registry) {//注入拦截器注册对象
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/login");
